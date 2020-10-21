@@ -127,6 +127,16 @@
     margin-top: 5px;
     text-align: center;
 }
+/* .testimonial .test-nav {
+    padding-top: 25px !important;
+} */
+
+.testimonial .test-nav img {
+    margin-left: 25px;
+    margin-right: 25px;
+    width: 50px;
+    height: 50px;
+}
 
 .button {
     text-transform: uppercase;
@@ -141,6 +151,16 @@ footer {
 }
 footer p {
     margin-top: 28px;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
 }
 
 

@@ -79,27 +79,34 @@
       </div>
     </div>
 
-    <section class="testimonial">
+    <div id="testimonial" class="testimonial">
       <div class="row justify-content-center">
         <div class="col-lg-8">
-          <h5 class="quote">"Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates id minus doloremque!"</h5>
+          <h5 class="quote">
+            {{users[currentIndex].quote}}
+          </h5>
         </div>
       </div>
       <div class="row justify-content-center">
-        <div class="col-6 justify-content-center d-flex">
-          <figure class="figure">
-            <img src="img/img1.png" alt="" class="rounded-circle">
-            <figcaption class="figure-caption text-center">
-              <h5>Sunny Dae</h5>
-              <p>Desainer</p>
-            </figcaption>
-          </figure>
+        <div class="col-8 justify-content-center d-flex">
+          <transition name="fade">
+            <figure class="figure">
+              <button @click="prev" class="btn test-nav" ><img :src="prevUser.img" alt="" class="rounded-circle"></button>
+              <img :src="users[currentIndex].img" :alt="users[currentIndex].name" class="rounded-circle">
+              <button @click="next" class="btn test-nav"><img :src="nextUser.img" alt="" class="rounded-circle"></button>
+              <figcaption>
+                <h5>{{users[currentIndex].name}}</h5>
+                <p>{{users[currentIndex].job}}</p>
+              </figcaption>
+            </figure>
+          </transition>
         </div>
       </div>
-    </section>
-
+    </div>
+  
   </div> 
   <!-- end container -->
+
 
   <footer>
     <div class="container">
@@ -108,5 +115,73 @@
       </div>
     </div>
   </footer>
+
+  <!-- Vue 3 global -->
+  <script src="js/vue3.global.js"></script>
+  <script>
+    const Testimonial = {
+      data() {
+        return {
+          onShowing: "Lisa Heart",
+          users: [
+            {
+              name: "Sunny Dae",
+              quote: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates id minus doloremque!",
+              job: "Designer",
+              img: "img/img1.png"
+            },
+            {
+              name: "Lisa Heart",
+              quote: "Lorem ipsum. Voluptates id minus doloremque!",
+              job: "Mucisian",
+              img: "img/img2.png"
+            },
+            {
+              name: "Abigail Yuu",
+              quote: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
+              job: "Frelancer",
+              img: "img/img3.png"
+            }
+          ],
+          timer: null,
+          currentIndex: 0
+        }
+      },
+      mounted: function() {
+        this.startSlide();
+      },
+      methods: {
+        startSlide: function(){
+          this.timer = setInterval(this.next, 10000)
+        },
+        next: function(){
+          if (this.currentIndex === this.users.length - 1) {
+            this.currentIndex = 0
+          } else {
+            this.currentIndex += 1
+          }
+        },
+        prev: function() {
+          if (this.currentIndex === 0) {
+            this.currentIndex = this.users.length - 1
+          } else {
+            this.currentIndex -= 1
+          }
+        }
+      },
+      computed: {
+        currentUser: function() {
+          return this.users[Math.abs(this.currentIndex) % this.users.length];
+        },
+        nextUser: function() {
+          return this.users[Math.abs(this.currentIndex + 1) % this.users.length];
+        },
+        prevUser: function() {
+          return this.users[Math.abs(this.currentIndex - 1) % this.users.length];
+        }
+      }
+    };
+    Vue.createApp(Testimonial).mount('#testimonial');
+  </script>
 </body>
 </html>
